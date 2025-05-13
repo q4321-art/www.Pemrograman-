@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>‎</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url("background.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      display: none;
+      text-align: center;
+      padding: 100px 20px;
+      min-height: 100vh;
+      backdrop-filter: blur(6px);
+    }
+
+    .show {
+      display: block;
+      animation: fadeIn 0.8s ease;
+    }
+
+    h1, h2 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #000;
+      min-height: 50px;
+    }
+
+    .social-icons {
+      margin: 20px 0;
+    }
+
+    .social-icons img {
+      margin: 0 10px;
+      width: 40px;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.2);
+    }
+
+    button {
+      padding: 12px 25px;
+      margin-top: 30px;
+      font-size: 1em;
+      border: none;
+      background-color: #00ffcc;
+      color: #000;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #00cc99;
+    }
+
+    .profile-img {
+      border-radius: 0%;
+      width: 100px;
+      height: 140px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .center-text, .services, .service-description {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .active {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .center-text {
+      text-align: center;
+      margin: auto;
+      max-width: 700px;
+      font-size: 1.1em;
+      white-space: pre-line;
+    }
+
+    .services {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: 20px auto;
+      font-size: 1.2em;
+    }
+
+    .services li {
+      margin: 10px 0;
+    }
+
+    .service-description {
+      max-width: 600px;
+      margin: auto;
+      font-size: 1.1em;
+      text-align: center;
+      margin-bottom: 20px;
+      min-height: 100px;
+      white-space: pre-line;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Halaman 1 -->
+  <div class="container" id="page1">
+    <h1 id="titleText"></h1>
+    <div class="social-icons">
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram" />
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/tiktok--v1.png" alt="TikTok" />
+      <img src="https://img.icons8.com/ios-filled/50/ffffff/github.png" alt="GitHub" />
+    </div>
+    <button onclick="nextPage(2)">Klik Selanjutnya</button>
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="container" id="page2">
+    <img src="foto dosen.jpg" alt="Profile" class="profile-img" id="profileImg" />
+    <h2 id="riwayatTitle"></h2>
+    <p class="center-text" id="aboutText"></p>
+    <button onclick="nextPage(3)">Klik Selanjutnya</button>
+  </div>
+
+  <!-- Halaman 3 -->
+  <div class="container" id="page3">
+    <h2 id="layananTitle"></h2>
+    <p class="service-description" id="layananDesc"></p>
+    <ul class="services" id="servicesList"></ul>
+    <button onclick="nextPage(1)">Kembali</button>
+  </div>
+
+  <script>
+    const typedOnce = { 1: false, 2: false, 3: false };
+
+    function typeText(elementId, text, delay = 40, callback) {
+      const element = document.getElementById(elementId);
+      element.textContent = '';
+      let i = 0;
+      const typing = setInterval(() => {
+        element.textContent += text.charAt(i);
+        i++;
+        if (i === text.length) {
+          clearInterval(typing);
+          if (callback) callback();
+        }
+      }, delay);
+    }
+
+    function nextPage(pageNumber) {
+      const pages = document.querySelectorAll('.container');
+      pages.forEach(page => page.classList.remove('show'));
+
+      const target = document.getElementById('page' + pageNumber);
+      target.classList.add('show');
+
+      if (pageNumber === 1 && !typedOnce[1]) {
+        typeText('titleText', 'Welcome');
+        typedOnce[1] = true;
+      }
+
+      if (pageNumber === 2 && !typedOnce[2]) {
+        setTimeout(() => {
+          document.getElementById('profileImg').classList.add('active');
+          document.getElementById('aboutText').classList.add('active');
+        }, 400);
+        typeText('riwayatTitle', 'Riwayat Saya', 60, () => {
+          const fullText = `Saya adalah seorang pengembang web dan pembuatan website, dengan desain yang menarik dan responsif dengan harga yang terjangkau (tergantung tingkat kesulitan). 
+Dan saya juga memiliki pengalaman membuat portofolio hingga landing page promosi.
+
+>RIWAYAT PENDIDIKAN<
+
+- SDN 016 Kinantan Tapung Riau.
+- Ponpes As Salam Naga Beralih Riau.
+- SMA Negeri 4 Tapung Riau.
+Dan sekarang saya sedang menempuh pendidikan saya di 
+- Universitas Pahlawan Tuanku Tambusai Kab.Kampar Riau.
+dengan jurusan Teknik Informatika, sesuai dengan bidang saya sekarang.`;
+          typeText('aboutText', fullText, 20);
+        });
+        typedOnce[2] = true;
+      }
+
+      if (pageNumber === 3 && !typedOnce[3]) {
+        typeText('layananTitle', 'Layanan Jasa & Joki', 60, () => {
+          const desc = `Berikut adalah beberapa layanan joki dan jasa yang saya sediakan untuk pelajar maupun mahasiswa:`;
+          typeText('layananDesc', desc, 20, () => {
+            const layanan = [
+              '✅ Jasa Pembuatan Website (HTML, CSS, JS, Flask)',
+              '✅ Joki Tugas SMK/SMA/Perkuliahan',
+              '✅ Desain Logo Perusahaan & Sekolah',
+              '✅ Landing Page Promosi Usaha'
+            ];
+            const ul = document.getElementById('servicesList');
+            ul.innerHTML = '';
+            layanan.forEach((item, i) => {
+              setTimeout(() => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                ul.appendChild(li);
+                ul.classList.add('active');
+              }, 300 * i);
+            });
+          });
+        });
+        typedOnce[3] = true;
+      }
+
+      if (pageNumber === 1) {
+        document.getElementById('profileImg').classList.remove('active');
+        document.getElementById('aboutText').classList.remove('active');
+        document.getElementById('servicesList').classList.remove('active');
+      }
+    }
+
+    window.onload = () => nextPage(1);
+  </script>
+</body>
+</html>
